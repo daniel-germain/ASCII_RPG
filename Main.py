@@ -19,7 +19,7 @@ mana_pot = 1
 gold = 0
 x = 0
 y = 0
-stat_num = 9 # Iterate if you add more stats. Used to error check
+stat_num = 10# Iterate if you add more stats. Used to error check
 # ---------------
 
 # Map
@@ -141,10 +141,10 @@ while run:
         elif choice == "2":
             try:
                 clear()
-                f = open("load.txt2", "r")
+                f = open("load.txt", "r")
                 load_list = f.readlines()
                 if len(load_list) == stat_num:
-                    name = int(load_list[0][:-1])
+                    name = load_list[0][:-1]
                     HP = int(load_list[1][:-1])
                     ATK = int(load_list[2][:-1])
                     health_pot = int(load_list[3][:-1])
@@ -154,6 +154,9 @@ while run:
                     y = int(load_list[7][:-1])
                     key = bool(load_list[8][:-1])
                     print(f"Welcome back \"{name}\"")
+                    input("> ")
+                    menu = False
+                    play = True
             except OSError:
                 print("No Save File")
                 input("> ")
