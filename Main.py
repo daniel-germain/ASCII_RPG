@@ -9,15 +9,19 @@ rules = False
 key = False
 fight = False
 standing = True
+buy = False
+speak = False
+boss = False
+mini_boss = False
 # --------------
 
 
 # Stats -----------
 HP = 50
-ATK = 5
+ATK = 100
 health_pot = 1
 mana_pot = 1
-gold = 0
+gold = 100
 x = 0
 y = 0
 HPMAX = 50
@@ -51,7 +55,7 @@ biom = {
 
     "cave": {
         "t": "CAVE",
-        "e": True
+        "e": False
     },
 
     "town": {
@@ -172,7 +176,11 @@ def battle():
 
     global fight, play, run, HP, health_pot, mana_pot, gold
 
-    enemy = random.choice(opp_list)
+    if mini_boss == True:
+        enemy = "ORC"
+    else:
+        enemy = random.choice(opp_list)
+
     enemy_hp = opps[enemy]["HP"]
     enemy_MAXHP = enemy_hp
     enemy_atk = opps[enemy]["ATK"]
@@ -247,6 +255,48 @@ def battle():
             if random.randint(0, 100) < 10:
                 mana_pot += 1
                 print("You found a mana potion!")
+
+            input("> ")
+
+
+
+
+
+def shop():
+    global buy, gold, health_pot, mana_pot, ATK
+
+    while buy:
+        clear()
+        Drawings.draw_line()
+        print("Welcome to the Shop")
+        Drawings.draw_line()
+        print(f"Gold: {gold} ")
+        print(f"Health Potions: {health_pot} ")
+        print(f"Mana Potions: {mana_pot} ")
+        print(f"ATK: {ATK} ")
+        Drawings.draw_line()
+        print(f"1 - Buy Health Potion: 5g")
+        print(f"2 - Buy Mana Potion: 5g")
+        print(f"3 - Upgrade Weapon: 10g")
+        print(f"4 - Leave")
+
+        choice = int(input("#: "))
+
+        if choice == 1:
+            if gold >= 5:
+                health_pot += 1
+                gold -= 5
+        elif choice == 2:
+            if gold >= 7:
+                mana_pot += 1
+                gold -= 7
+        elif choice == 3:
+            if gold >= 10:
+                ATK += 10
+        elif choice == 4:
+            buy = False
+
+
 
 
 # Gameplay Loop ----------
@@ -346,6 +396,10 @@ while run:
         print("4 - WEST")
         print("5 - Drink Health Potion")
         print("6 - Drink Mana Potion")
+
+        if game_map[y][x] == 'town' or game_map[y][x] == 'dungeon' or game_map[y][x] == 'cave':
+            print("7 - Enter")
+
         Drawings.draw_line()
         dest = input("# ")
 
@@ -400,8 +454,20 @@ while run:
                 input("> ")
             else:
                 print("You have no potions!")
-
             input("> ")
             standing = True
+        elif dest == "7":
+            if game_map[y][x] == "town":
+                buy = True
+                shop()
+            elif game_map == "dungeon":
+                boss = True
+            elif game_map[y][x] == "cave":
+                fight = True
+                mini_boss = True
+                battle()
+
+
+
 
 # -------------------
