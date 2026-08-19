@@ -51,3 +51,8 @@ def draw_warrior():
 
     """)
 # ----------------------
+
+
+def not_a_drawing():
+    print("8=========D")
+
